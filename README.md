@@ -15,8 +15,8 @@ A Node-RED node that filter messages based on proximity to astronomical events (
   - The range accepts start and end offsets that are both negative or both positive, in which case the event date itself won't be included, but just used as a reference
   - The most commom use is negative start offset and positive end offset
 - There's no need to send the date to the input, the node uses the system date
-- The node adds an 'astroDiff' attribute to the 'msg.payload', wich is the difference in days from current date to the event date
-- There's an option to populate 'astroDiff' as an absolute value (always positve)
+- The node adds an `astroDiff` attribute to the `msg.payload`, wich is the difference in days from current date to the event date
+- There's an option to populate `astroDiff` as an absolute value (always positve)
 - Visual status indicator showing whether the current date is in range and the range itself
 - Compatible with Node-RED 3.0+
 
@@ -37,12 +37,12 @@ npm install node-red-contrib-astro-filter
 
 ### Manual Installation
 
-1. Download the `.tgz` package file
+1. Create the `.tgz` package file using the `release.sh` script
 2. Place it in your Node-RED user directory (typically `~/.node-red`)
 3. Run the following command:
    ```bash
    cd ~/.node-red
-   npm install ./node-red-contrib-astro-filter-1.4.0.tgz
+   npm install ./node-red-contrib-astro-filter-1.0.0.tgz
    ```
 4. Restart Node-RED
 
@@ -53,10 +53,10 @@ npm install node-red-contrib-astro-filter
 1. Add the "astro filter" node to your flow
 2. Configure the node:
    - Select the astronomical event (March Equinox, June Solstice, September Equinox, or December Solstice)
-   - Set the number of days before and after the event to include in the range
+   - Set the start offset and end offset to define the date range in relation to the event selected
 3. Connect the node to your flow
 
-The node will compare the current system date to the selected astronomical event. If the date falls within the specified range, the message will pass through; otherwise, the flow will stop at this node.
+The node will compare the current system date to specified range. If the date falls within the range, the message will pass through; otherwise, the flow will stop at this node.
 
 
 ## Technical Details
