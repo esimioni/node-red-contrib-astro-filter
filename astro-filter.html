@@ -1,0 +1,108 @@
+<script type="text/javascript">
+    RED.nodes.registerType('astro-filter', {
+        category: 'time and astro',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            eventType: { value: "june_solstice" },
+            startOffset: { value: 0, validate: RED.validators.number() },
+            endOffset: { value: 0, validate: RED.validators.number() },
+            useAbsoluteDiff: { value: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-calendar",
+        label: function () {
+            return this.name || "astro filter";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="astro-filter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-eventType"><i class="fa fa-calendar"></i> Event</label>
+        <select id="node-input-eventType">
+            <option value="march_equinox">March Equinox (Spring in North/Autumn in South)</option>
+            <option value="june_solstice">June Solstice (Summer in North/Winter in South)</option>
+            <option value="september_equinox">September Equinox (Autumn in North/Spring in South)</option>
+            <option value="december_solstice">December Solstice (Winter in North/Summer in South)</option>
+        </select>
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-startOffset"><i class="fa fa-step-backward"></i> Start Offset</label>
+        <input type="number" id="node-input-startOffset" placeholder="0">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-endOffset"><i class="fa fa-step-forward"></i> End Offset</label>
+        <input type="number" id="node-input-endOffset" placeholder="0">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-useAbsoluteDiff"><i class="fa fa-calculator"></i> Absolute Diff</label>
+        <input type="checkbox" id="node-input-useAbsoluteDiff" style="display:inline-block; width:auto; vertical-align:top;">
+        <span>Use absolute value for day difference</span>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="astro-filter">
+    <p>A Node-RED node that filters messages based on proximity to astronomical events (solstices and equinoxes).</p>
+    
+    <h3>Details</h3>
+    <p>This node compares the current system date against a selected astronomical event (solstice or equinox) and determines if the date falls within a range related that event. If the date is within range, the message passes through; otherwise, the flow stops.</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>Any input payload (passed through with added properties if within date range)</dd>
+    </dl>
+    
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>Original payload with added property:
+            <ul>
+                <li><b>astroDiff</b> - Number of days from current date to the event (negative before event, zero on event day, positive after)</li>
+            </ul>
+        </dd>
+    </dl>
+    
+    <h3>Properties</h3>
+    <dl class="message-properties">
+        <dt>Event <span class="property-type">selection</span></dt>
+        <dd>The astronomical event to check against:
+            <ul>
+                <li><b>March Equinox</b> - Spring in Northern/Autumn in Southern Hemisphere</li>
+                <li><b>June Solstice</b> - Summer in Northern/Winter in Southern Hemisphere</li>
+                <li><b>September Equinox</b> - Autumn in Northern/Spring in Southern Hemisphere</li>
+                <li><b>December Solstice</b> - Winter in Northern/Summer in Southern Hemisphere</li>
+            </ul>
+        </dd>
+        
+        <dt>Start Offset <span class="property-type">number</span></dt>
+        <dd>How many days related to the event is the start of the range</dd>
+        
+        <dt>End Offset <span class="property-type">number</span></dt>
+        <dd>How many days related to the event is the end of the range</dd>
+        
+        <dt>Absolute Diff <span class="property-type">boolean</span></dt>
+        <dd>When checked, the astroDiff value will be the absolute value (always positive)</dd>
+    </dl>
+    
+    <h3>Details</h3>
+    <p>Astronomical events like solstices and equinoxes occur on the same date globally, regardless of hemisphere.</p>
+    
+    <p>The node adds an <code>astroDiff</code> property to the message payload, which indicates the number of days from the current date to the event date. This value is negative before the event, zero on the event day, and positive after the event.</p>
+    
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://github.com/cosinekitty/astronomy" target="_blank">Astronomy Engine</a> - Used for precise astronomical calculations</li>
+        <li><a href="https://github.com/moment/moment-timezone" target="_blank">Date Library</a> - Used date operations</li>
+    </ul>
+</script>

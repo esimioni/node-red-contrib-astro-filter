@@ -1,0 +1,41 @@
+{
+  "name": "node-red-contrib-astro-filter",
+  "version": "1.0.0",
+  "author": "Eduardo Simioni",
+  "title": "Node-RED Astro Filter",
+  "homepage": "https://github.com/esimioni/node-red-contrib-astro-filter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esimioni/node-red-contrib-astro-filter.git"
+  },
+  "description": "Node-RED node for filtering messages based on astronomical events (solstices and equinoxes)",
+  "main": "astro-filter.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "node-red",
+    "astronomy",
+    "solstice",
+    "equinox",
+    "filter",
+    "date",
+    "season"
+  ],
+  "node-red": {
+    "nodes": {
+      "astro-filter": "astro-filter.js"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "astronomy-engine": "^2.1.19",
+    "moment-timezone": "^0.5.48"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
